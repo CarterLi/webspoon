@@ -13,16 +13,16 @@ copy:
 	@cp -r src/* dist
 
 usemin:
-	@../bin/usemin.js dist/*.html
+	@node ../bin/usemin.js dist/*.html
 
 pack:
-	@../bin/pack.js 'src/**/webspoon.html' -regexp '^src' -replacement 'xxx' > dist/webspoon.html.js
+	@node ../bin/pack.js 'src/**/webspoon.html' -regexp '^src' -replacement 'xxx' > dist/webspoon.html.js
 
 wildcard:
-	@../bin/wildcard.js 'dist/**/test7.html'
+	@node ../bin/wildcard.js 'dist/**/test7.html'
 
 rev:
-	@../bin/rev.js -base 'dist/test5.html' -base 'dist/dist5.js' -static 'dist/dist5.js'
+	@node ../bin/rev.js -base 'dist/test5.html' -base 'dist/dist5.js' -static 'dist/dist5.js'
 
 check:
 	@open index.html

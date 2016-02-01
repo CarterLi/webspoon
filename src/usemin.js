@@ -20,9 +20,10 @@ var tagMatcher = /<(?:script|link)([\s\S]*?)>/ig;
 var matchUsemin = string => {
   var file = /file\s*=\s*"(.*?)"|$/.exec(string)[1];
   var href = /(?:href|src)\s*=\s*"(.*?)"|$/.exec(string)[1];
+  var custom = /custom\s*=\s*"(.*?)"|$/.exec(string)[1] || '';
   if (file === void 0 && href) file = href.replace(/^\/(?!\/)/, '');
   if (/^\/\//.test(file)) file = 'http:' + file;
-  return { file, href };
+  return { file, href, custom };
 };
 
 var loadRemoteDataCache = {};
@@ -79,9 +80,9 @@ Promise
           // 计算 output
           var output;
           if (/\.js$/.test(configs.file)) {
-            output = `<script src="${configs.href}"></script>`;
+            output = `<script src="${configs.href}" ${configs.custom}></script>`;
           } else {
-            output = `<link href="${configs.href}" rel="stylesheet" />`;
+            output = `<link href="${configs.href}" rel="stylesheet" ${configs.custom} />`;
           }
           // 从 HTML 片段中搜索 href 和 filte
           var list = [];
@@ -167,4 +168,3 @@ Promise
     process.stderr.write('[31m\n' + error.stack + '\n[0m');
     process.exit(1);
   });
-
